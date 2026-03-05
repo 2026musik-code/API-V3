@@ -9,4 +9,4 @@ bucket_name = "dataapi"
 [[d1_databases]]
 binding = "DB"
 database_name = "v4api-users"
-database_id = "replace-with-your-d1-database-id"
+database_id = "c958fd3c-484c-4be4-82ed-195115feb0d8"
