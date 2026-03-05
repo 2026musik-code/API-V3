@@ -1,0 +1,12 @@
+name = "v4api-gateway"
+main = "src/index.ts"
+compatibility_date = "2025-02-20"
+
+[[r2_buckets]]
+binding = "dataapi"
+bucket_name = "dataapi"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "v4api-users"
+database_id = "replace-with-your-d1-database-id"
