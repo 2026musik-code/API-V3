@@ -242,8 +242,8 @@ const adminHtml = `<!DOCTYPE html>
     </div>
   </div>
 
-  <div id="gatewayModal" class="hidden fixed inset-0 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-4">
-    <div class="w-full max-w-xl bg-slate-900/90 border border-cyan-400/40 rounded-2xl p-6">
+  <div id="gatewayModal" class="hidden fixed inset-0 z-[9999] bg-black/80 backdrop-blur-sm items-center justify-center p-4">
+    <div class="w-full max-w-xl bg-[#0f172a] border-2 border-cyan-400/60 rounded-2xl p-6">
       <h2 id="modalTitle" class="text-2xl font-bold mb-4">Add API Gateway</h2>
       <form id="gatewayForm" class="space-y-4">
         <input id="keyInput" required class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-white/10" placeholder="Key Name" />
