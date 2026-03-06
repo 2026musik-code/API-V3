@@ -242,8 +242,8 @@ const adminHtml = `<!DOCTYPE html>
     </div>
   </div>
 
-  <div id="gatewayModal" class="hidden fixed inset-0 bg-slate-950/70 backdrop-blur-sm items-center justify-center p-4">
-    <div class="w-full max-w-xl bg-slate-900/90 border border-cyan-400/40 rounded-2xl p-6">
+  <div id="gatewayModal" class="hidden fixed inset-0 z-[9999] bg-black/80 backdrop-blur-sm items-center justify-center p-4">
+    <div class="w-full max-w-xl bg-[#0f172a] border-2 border-cyan-400/60 rounded-2xl p-6">
       <h2 id="modalTitle" class="text-2xl font-bold mb-4">Add API Gateway</h2>
       <form id="gatewayForm" class="space-y-4">
         <input id="keyInput" required class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-white/10" placeholder="Key Name" />
@@ -741,10 +741,10 @@ const dashboardHtml = `<!DOCTYPE html>
       <a href="#" id="btnMenuAkun" class="flex items-center gap-3 px-4 py-3 rounded-xl border border-cyan-400/40 bg-slate-900/50 hover:border-cyan-300 transition">
         <span>👤</span><span>Akun Saya</span>
       </a>
-      <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl border border-cyan-400/40 bg-slate-900/50 hover:border-cyan-300 transition">
+      <a href="#" id="btnDocs" onclick="openDocs(); return false;" class="flex items-center gap-3 px-4 py-3 rounded-xl border border-cyan-400/40 bg-slate-900/50 hover:border-cyan-300 transition">
         <span>📘</span><span>Dokumentasi</span>
       </a>
-      <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl border border-amber-300/70 bg-gradient-to-r from-amber-500/20 to-violet-500/20 hover:border-amber-200 transition text-amber-200 font-semibold">
+      <a href="#" id="btnPro" onclick="openPro(); return false;" class="flex items-center gap-3 px-4 py-3 rounded-xl border border-amber-300/70 bg-gradient-to-r from-amber-500/20 to-violet-500/20 hover:border-amber-200 transition text-amber-200 font-semibold">
         <span>👑</span><span>Upgrade Pro</span>
       </a>
     </nav>
@@ -766,6 +766,73 @@ const dashboardHtml = `<!DOCTYPE html>
     </div>
   </div>
 
+  <div id="docsModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/55 backdrop-blur-md p-4">
+    <div class="w-full max-w-xl rounded-2xl border border-cyan-400/40 bg-slate-900/85 backdrop-blur-xl p-5">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-bold text-white">Dokumentasi</h3>
+        <button id="closeDocsBtn" class="px-3 py-1 rounded-lg border border-white/20 text-white">✕</button>
+      </div>
+      <p class="text-slate-200 mb-3">Gunakan parameter prompt untuk bertanya ke AI.</p>
+      <pre class="rounded-xl bg-slate-950 border border-slate-700 p-4 text-cyan-300 text-sm overflow-x-auto"><code>GET /api/gateway/aimuslim?apikey=YOUR_KEY&prompt=Halo</code></pre>
+      <button id="closeDocsFooterBtn" class="mt-5 w-full px-4 py-2 rounded-xl border border-cyan-400/40 text-white hover:border-cyan-300 transition">Tutup</button>
+    </div>
+  </div>
+
+  <div id="proModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/55 backdrop-blur-md p-4">
+    <div class="w-full max-w-xl rounded-2xl border border-amber-300/50 bg-slate-900/90 backdrop-blur-xl p-5">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-full mr-3 rounded-xl border border-amber-300 shadow-[0_0_18px_rgba(251,191,36,0.45)] px-4 py-3 text-center">
+          <h3 class="text-xl font-bold text-amber-200 tracking-wide">VERSI PRO</h3>
+        </div>
+        <button id="closeProBtn" class="px-3 py-1 rounded-lg border border-white/20 text-white">✕</button>
+      </div>
+
+      <div class="rounded-xl border border-cyan-400/40 bg-slate-900/70 p-4 text-sm text-slate-100 space-y-2 mb-4">
+        <p>✅ Limit Tanpa Batas (Unlimited Hits)</p>
+        <p>✅ Akses ke Semua Versi API Premium</p>
+        <p>✅ Respon API Lebih Cepat & Prioritas</p>
+        <p>✅ Support Update Fitur Terbaru</p>
+      </div>
+
+      <div class="rounded-xl border border-transparent bg-[linear-gradient(#0f172a,#0f172a),linear-gradient(120deg,#a855f7,#3b82f6)] bg-origin-border bg-clip-padding p-4">
+        <p class="text-slate-200 text-sm mb-3">Hubungi kami untuk upgrade sekarang:</p>
+        <div class="grid sm:grid-cols-2 gap-3">
+          <a href="https://wa.me/6287733745059" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-2 rounded-xl border border-emerald-400/50 text-emerald-300 hover:border-emerald-300">
+            <span>🟢</span><span>WhatsApp</span>
+          </a>
+          <a href="https://t.me/otomotif_digital" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-2 rounded-xl border border-sky-400/50 text-sky-300 hover:border-sky-300">
+            <span>✈️</span><span>Telegram</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="playgroundModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 backdrop-blur-md p-4">
+    <div class="w-full max-w-2xl rounded-2xl border border-cyan-400/40 bg-slate-900 p-5">
+      <div class="flex items-center justify-between mb-4">
+        <h3 id="playgroundTitle" class="text-lg sm:text-xl font-bold text-white">Universal API Playground</h3>
+        <button id="closePlaygroundBtn" class="px-3 py-1 rounded-lg border border-white/20 text-white">✕</button>
+      </div>
+
+      <div class="space-y-3">
+        <label id="playgroundInputLabel" for="playgroundInput" class="text-sm text-cyan-300 font-semibold">Masukkan Query</label>
+        <input id="playgroundInput" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-cyan-400/40 text-white" placeholder="Masukkan query, link, atau keyword" />
+        <button id="runPlaygroundBtn" class="w-full px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-violet-600 font-semibold">Test API</button>
+      </div>
+
+      <div class="mt-4">
+        <p class="text-sm text-cyan-200 mb-2">JSON Preview</p>
+        <pre id="playgroundJson" class="min-h-40 max-h-72 overflow-auto rounded-xl bg-slate-950 border border-slate-700 p-4 text-xs sm:text-sm leading-6"><code class="text-slate-300">Belum ada response.</code></pre>
+      </div>
+
+      <div class="mt-4">
+        <p class="text-sm text-cyan-200 mb-2">Preview Media</p>
+        <div id="playgroundMedia" class="space-y-3 text-slate-400 text-sm rounded-xl border border-slate-700 bg-slate-950 p-3">Belum ada media.</div>
+      </div>
+    </div>
+  </div>
+
 <script>
 const apiKey = localStorage.getItem('apikey') || '';
 if (!apiKey) {
@@ -777,6 +844,17 @@ const sidebar = document.getElementById('sidebar');
 const menuOverlay = document.getElementById('menuOverlay');
 const menuIcon = document.getElementById('menuIcon');
 const accountModal = document.getElementById('accountModal');
+const docsModal = document.getElementById('docsModal');
+const proModal = document.getElementById('proModal');
+const playgroundModal = document.getElementById('playgroundModal');
+const playgroundTitle = document.getElementById('playgroundTitle');
+const playgroundInputLabel = document.getElementById('playgroundInputLabel');
+const playgroundInput = document.getElementById('playgroundInput');
+const runPlaygroundBtn = document.getElementById('runPlaygroundBtn');
+const playgroundJson = document.getElementById('playgroundJson');
+const playgroundMedia = document.getElementById('playgroundMedia');
+
+const playgroundState = { gatewayKey: '' };
 
 function openAccount() {
   closeSidebar();
@@ -787,6 +865,139 @@ function openAccount() {
 function closeAccount() {
   accountModal.classList.add('hidden');
   accountModal.classList.remove('flex');
+}
+
+function openDocs() {
+  closeSidebar();
+  docsModal.classList.remove('hidden');
+  docsModal.classList.add('flex');
+}
+
+function closeDocs() {
+  docsModal.classList.add('hidden');
+  docsModal.classList.remove('flex');
+}
+
+function openPro() {
+  closeSidebar();
+  proModal.classList.remove('hidden');
+  proModal.classList.add('flex');
+}
+
+function closePro() {
+  proModal.classList.add('hidden');
+  proModal.classList.remove('flex');
+}
+
+function detectInputLabel(key) {
+  const lowered = String(key || '').toLowerCase();
+  if (lowered.includes('ai')) return 'Masukkan Pertanyaan';
+  if (lowered.includes('video') || lowered.includes('down')) return 'Masukkan Link Video';
+  return 'Masukkan Query';
+}
+
+function closePlayground() {
+  playgroundModal.classList.add('hidden');
+  playgroundModal.classList.remove('flex');
+}
+
+function findMediaLinks(value, links = []) {
+  if (typeof value === 'string') {
+    const matches = value.match(/https?:\/\/[^"'\s]+/g) || [];
+    matches.forEach((url) => {
+      if (/\.(jpg|jpeg|png|gif|webp|mp4)(\?|$)/i.test(url)) links.push(url);
+    });
+    return links;
+  }
+
+  if (Array.isArray(value)) {
+    value.forEach((item) => findMediaLinks(item, links));
+    return links;
+  }
+
+  if (value && typeof value === 'object') {
+    Object.values(value).forEach((item) => findMediaLinks(item, links));
+  }
+
+  return links;
+}
+
+function syntaxHighlightJson(obj) {
+  const json = JSON.stringify(obj, null, 2);
+  const escaped = esc(json);
+  return escaped.replace(/("(?:\\u[a-fA-F0-9]{4}|\\[^u]|[^\\"])*"\s*:?)|(\btrue\b|\bfalse\b|\bnull\b)|(-?\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b)/g, (match, stringPart, boolNullPart, numberPart) => {
+    if (stringPart) {
+      if (/:$/.test(stringPart)) return '<span class="text-cyan-300">' + stringPart + '</span>';
+      return '<span class="text-emerald-300">' + stringPart + '</span>';
+    }
+    if (boolNullPart) return '<span class="text-violet-300">' + boolNullPart + '</span>';
+    if (numberPart) return '<span class="text-amber-300">' + numberPart + '</span>';
+    return match;
+  });
+}
+
+function renderMediaPreview(payload) {
+  const links = [...new Set(findMediaLinks(payload))];
+  if (!links.length) {
+    playgroundMedia.innerHTML = '<p class="text-slate-400 text-sm">Tidak ada media yang bisa dipreview.</p>';
+    return;
+  }
+
+  playgroundMedia.innerHTML = links.map((url) => {
+    const safe = esc(url);
+    if (/\.(mp4)(\?|$)/i.test(url)) {
+      return '<div class="space-y-2"><p class="text-slate-300 break-all text-xs">' + safe + '</p><video controls class="w-full rounded-xl border border-slate-700" src="' + safe + '"></video></div>';
+    }
+    return '<div class="space-y-2"><p class="text-slate-300 break-all text-xs">' + safe + '</p><img class="w-full rounded-xl border border-slate-700" src="' + safe + '" alt="Media preview" /></div>';
+  }).join('');
+}
+
+function openPlayground(gatewayKey) {
+  playgroundState.gatewayKey = gatewayKey;
+  playgroundTitle.textContent = 'Test API: ' + gatewayKey;
+  playgroundInputLabel.textContent = detectInputLabel(gatewayKey);
+  playgroundInput.value = '';
+  playgroundJson.innerHTML = '<code class="text-slate-300">Belum ada response.</code>';
+  playgroundMedia.innerHTML = 'Belum ada media.';
+  closeSidebar();
+  playgroundModal.classList.remove('hidden');
+  playgroundModal.classList.add('flex');
+}
+
+async function runPlaygroundTest() {
+  const rawInput = playgroundInput.value.trim();
+  if (!playgroundState.gatewayKey) return;
+
+  const params = new URLSearchParams({ apikey: apiKey });
+  if (rawInput) {
+    const inputLabel = detectInputLabel(playgroundState.gatewayKey);
+    if (inputLabel === 'Masukkan Pertanyaan') {
+      params.set('prompt', rawInput);
+    } else if (inputLabel === 'Masukkan Link Video') {
+      params.set('url', rawInput);
+    } else {
+      params.set('query', rawInput);
+    }
+    params.set('input', rawInput);
+  }
+
+  const endpoint = '/api/gateway/' + encodeURIComponent(playgroundState.gatewayKey) + '?' + params.toString();
+  runPlaygroundBtn.disabled = true;
+  runPlaygroundBtn.textContent = 'Testing...';
+
+  try {
+    const res = await fetch(endpoint);
+    const payload = await res.json().catch(() => ({ error: 'Response bukan JSON valid' }));
+    playgroundJson.innerHTML = syntaxHighlightJson(payload);
+    renderMediaPreview(payload);
+  } catch (err) {
+    const payload = { error: err && err.message ? err.message : String(err) };
+    playgroundJson.innerHTML = syntaxHighlightJson(payload);
+    renderMediaPreview(payload);
+  } finally {
+    runPlaygroundBtn.disabled = false;
+    runPlaygroundBtn.textContent = 'Test API';
+  }
 }
 
 function openSidebar() {
@@ -808,6 +1019,15 @@ document.getElementById('btnMenuAkun').addEventListener('click', (e) => { e.prev
 document.getElementById('closeAccountBtn').addEventListener('click', closeAccount);
 document.getElementById('closeAccountFooterBtn').addEventListener('click', closeAccount);
 accountModal.addEventListener('click', (e) => { if (e.target === accountModal) closeAccount(); });
+document.getElementById('closeDocsBtn').addEventListener('click', closeDocs);
+document.getElementById('closeDocsFooterBtn').addEventListener('click', closeDocs);
+document.getElementById('closeProBtn').addEventListener('click', closePro);
+document.getElementById('closePlaygroundBtn').addEventListener('click', closePlayground);
+runPlaygroundBtn.addEventListener('click', runPlaygroundTest);
+playgroundInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); runPlaygroundTest(); } });
+docsModal.addEventListener('click', (e) => { if (e.target === docsModal) closeDocs(); });
+proModal.addEventListener('click', (e) => { if (e.target === proModal) closePro(); });
+playgroundModal.addEventListener('click', (e) => { if (e.target === playgroundModal) closePlayground(); });
 
 document.getElementById('logoutBtn').addEventListener('click', () => {
   localStorage.removeItem('apikey');
@@ -841,7 +1061,10 @@ async function load() {
         '<p><span class="text-cyan-300 font-semibold">Gateway Key:</span> <span class="text-slate-200 break-all">' + esc(g.key) + '</span></p>' +
         '<p><span class="text-amber-300 font-semibold">Target URL:</span> <span class="text-slate-300 break-all">' + esc(example) + '</span></p>' +
       '</div>' +
-      '<button data-copy="' + esc(example) + '" class="mt-3 w-full px-3 py-2 rounded-xl border border-cyan-400/50 hover:border-amber-300/90 text-cyan-200 hover:text-amber-200 transition">Copy API Link</button>' +
+      '<div class="mt-3 grid sm:grid-cols-2 gap-2">' +
+      '<button data-copy="' + esc(example) + '" class="w-full px-3 py-2 rounded-xl border border-cyan-400/50 hover:border-amber-300/90 text-cyan-200 hover:text-amber-200 transition">Copy API Link</button>' +
+      '<button data-test="' + esc(g.key) + '" class="w-full px-3 py-2 rounded-xl border border-violet-400/50 hover:border-violet-300 text-violet-200 hover:text-violet-100 transition">Test API</button>' +
+    '</div>' +
     '</article>';
   }).join('') || '<article class="border border-cyan-400/40 rounded-2xl bg-slate-900/30 p-6 text-center text-slate-400">Belum ada API tersedia.</article>';
 }
@@ -850,9 +1073,15 @@ body.addEventListener('click', async (e) => {
   const target = e.target;
   if (!(target instanceof HTMLElement)) return;
   const copy = target.getAttribute('data-copy');
-  if (!copy) return;
-  await navigator.clipboard.writeText(copy);
-  alert('URL copied!');
+  if (copy) {
+    await navigator.clipboard.writeText(copy);
+    alert('URL copied!');
+    return;
+  }
+
+  const testKey = target.getAttribute('data-test');
+  if (!testKey) return;
+  openPlayground(testKey);
 });
 
 load();
