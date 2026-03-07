@@ -750,7 +750,7 @@ const dashboardHtml = `<!DOCTYPE html>
     </nav>
   </aside>
 
-  <div id="accountModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/55 backdrop-blur-md p-4">
+  <div id="accountModal" class="hidden pointer-events-none fixed inset-0 z-50 items-center justify-center bg-black/55 backdrop-blur-md p-4">
     <div class="w-full max-w-md rounded-2xl border border-cyan-400/40 bg-slate-900/85 backdrop-blur-xl p-5">
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-xl font-bold text-white">Akun Saya</h3>
@@ -766,7 +766,7 @@ const dashboardHtml = `<!DOCTYPE html>
     </div>
   </div>
 
-  <div id="docsModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/55 backdrop-blur-md p-4">
+  <div id="docsModal" class="hidden pointer-events-none fixed inset-0 z-50 items-center justify-center bg-black/55 backdrop-blur-md p-4">
     <div class="w-full max-w-xl rounded-2xl border border-cyan-400/40 bg-slate-900/85 backdrop-blur-xl p-5">
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-xl font-bold text-white">Dokumentasi</h3>
@@ -778,7 +778,7 @@ const dashboardHtml = `<!DOCTYPE html>
     </div>
   </div>
 
-  <div id="proModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/55 backdrop-blur-md p-4">
+  <div id="proModal" class="hidden pointer-events-none fixed inset-0 z-50 items-center justify-center bg-black/55 backdrop-blur-md p-4">
     <div class="w-full max-w-xl rounded-2xl border border-amber-300/50 bg-slate-900/90 backdrop-blur-xl p-5">
       <div class="flex items-center justify-between mb-4">
         <div class="w-full mr-3 rounded-xl border border-amber-300 shadow-[0_0_18px_rgba(251,191,36,0.45)] px-4 py-3 text-center">
@@ -808,7 +808,7 @@ const dashboardHtml = `<!DOCTYPE html>
     </div>
   </div>
 
-  <div id="playgroundModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/80 backdrop-blur-md p-4">
+  <div id="playgroundModal" class="hidden pointer-events-none fixed inset-0 z-50 items-center justify-center bg-black/80 backdrop-blur-md p-4">
     <div class="w-full max-w-2xl rounded-2xl border border-cyan-400/40 bg-slate-900 p-5">
       <div class="flex items-center justify-between mb-4">
         <h3 id="playgroundTitle" class="text-lg sm:text-xl font-bold text-white">Universal API Playground</h3>
@@ -818,7 +818,7 @@ const dashboardHtml = `<!DOCTYPE html>
       <div class="space-y-3">
         <label id="playgroundInputLabel" for="playgroundInput" class="text-sm text-cyan-300 font-semibold">Masukkan Query</label>
         <input id="playgroundInput" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-cyan-400/40 text-white" placeholder="Masukkan query, link, atau keyword" />
-        <button id="runPlaygroundBtn" class="w-full px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-violet-600 font-semibold">Test API</button>
+        <div class="grid sm:grid-cols-2 gap-2"><button id="runPlaygroundBtn" class="w-full px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-violet-600 font-semibold">Test API</button><button id="resetPlaygroundBtn" class="w-full px-4 py-2.5 rounded-xl border border-white/20 text-slate-200">Reset</button></div>
       </div>
 
       <div class="mt-4">
@@ -851,42 +851,44 @@ const playgroundTitle = document.getElementById('playgroundTitle');
 const playgroundInputLabel = document.getElementById('playgroundInputLabel');
 const playgroundInput = document.getElementById('playgroundInput');
 const runPlaygroundBtn = document.getElementById('runPlaygroundBtn');
+const resetPlaygroundBtn = document.getElementById('resetPlaygroundBtn');
 const playgroundJson = document.getElementById('playgroundJson');
 const playgroundMedia = document.getElementById('playgroundMedia');
 
 const playgroundState = { gatewayKey: '' };
 
+function setModalState(modal, isOpen) {
+  if (!modal) return;
+  modal.classList.toggle('hidden', !isOpen);
+  modal.classList.toggle('flex', isOpen);
+  modal.classList.toggle('pointer-events-none', !isOpen);
+}
+
 function openAccount() {
   closeSidebar();
-  accountModal.classList.remove('hidden');
-  accountModal.classList.add('flex');
+  setModalState(accountModal, true);
 }
 
 function closeAccount() {
-  accountModal.classList.add('hidden');
-  accountModal.classList.remove('flex');
+  setModalState(accountModal, false);
 }
 
 function openDocs() {
   closeSidebar();
-  docsModal.classList.remove('hidden');
-  docsModal.classList.add('flex');
+  setModalState(docsModal, true);
 }
 
 function closeDocs() {
-  docsModal.classList.add('hidden');
-  docsModal.classList.remove('flex');
+  setModalState(docsModal, false);
 }
 
 function openPro() {
   closeSidebar();
-  proModal.classList.remove('hidden');
-  proModal.classList.add('flex');
+  setModalState(proModal, true);
 }
 
 function closePro() {
-  proModal.classList.add('hidden');
-  proModal.classList.remove('flex');
+  setModalState(proModal, false);
 }
 
 function detectInputLabel(key) {
@@ -897,8 +899,7 @@ function detectInputLabel(key) {
 }
 
 function closePlayground() {
-  playgroundModal.classList.add('hidden');
-  playgroundModal.classList.remove('flex');
+  setModalState(playgroundModal, false);
 }
 
 function findMediaLinks(value, links = []) {
@@ -960,8 +961,7 @@ function openPlayground(gatewayKey) {
   playgroundJson.innerHTML = '<code class="text-slate-300">Belum ada response.</code>';
   playgroundMedia.innerHTML = 'Belum ada media.';
   closeSidebar();
-  playgroundModal.classList.remove('hidden');
-  playgroundModal.classList.add('flex');
+  setModalState(playgroundModal, true);
 }
 
 async function runPlaygroundTest() {
@@ -1008,6 +1008,11 @@ function closeSidebar() {
   menuIcon.classList.remove('rotate-90');
 }
 
+setModalState(accountModal, false);
+setModalState(docsModal, false);
+setModalState(proModal, false);
+setModalState(playgroundModal, false);
+
 document.getElementById('menuBtn').addEventListener('click', openSidebar);
 document.getElementById('closeMenuBtn').addEventListener('click', closeSidebar);
 menuOverlay.addEventListener('click', closeSidebar);
@@ -1020,6 +1025,11 @@ document.getElementById('closeDocsFooterBtn').addEventListener('click', closeDoc
 document.getElementById('closeProBtn').addEventListener('click', closePro);
 document.getElementById('closePlaygroundBtn').addEventListener('click', closePlayground);
 runPlaygroundBtn.addEventListener('click', runPlaygroundTest);
+resetPlaygroundBtn.addEventListener('click', () => {
+  playgroundInput.value = '';
+  playgroundJson.innerHTML = '<code class="text-slate-300">Belum ada response.</code>';
+  playgroundMedia.innerHTML = 'Belum ada media.';
+});
 playgroundInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); runPlaygroundTest(); } });
 docsModal.addEventListener('click', (e) => { if (e.target === docsModal) closeDocs(); });
 proModal.addEventListener('click', (e) => { if (e.target === proModal) closePro(); });
