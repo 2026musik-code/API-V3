@@ -1,4 +1,4 @@
-name = "v4api-gateway"
+name = "api-v3"
 main = "src/index.ts"
 compatibility_date = "2025-02-20"
 
